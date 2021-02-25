@@ -1,9 +1,9 @@
 import json
 #导入json头文件
 import os,sys
-json_path = 'D:\\Github\\\\file\\123.json'
+json_path = ''
 #json原文件
-json_path1 = 'D:\\Github\\\\file\\123.json'
+json_path1 = ''
 #修改json文件后保存的路径
 dict={}
 #用来存储数据

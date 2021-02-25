@@ -11,7 +11,7 @@ import logging.handlers
 #变量
 universalCounter=0 #通用计数器
 
-live_cid="1221274" #直播间房间号
+live_cid="" #直播间房间号
 live_platform="web" #直播流格式
 live_quality="4" #画质 2：流畅 3：高墙 4：原画
 live_qn="10000" #画质 80：流畅 150：高墙 400：蓝光 10000：原画
@@ -30,7 +30,7 @@ api_post_live_inf_json={
     'id': live_cid
 }
 
-recordingFolder="D:\\OBS录像\\ffmpeg\\" #录播文件存储目录
+recordingFolder="" #录播文件存储目录
 
 ffmpeg_location="ffmpeg.exe" #ffmpeg.exe 文件位置
 ffmpeg_UA="User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36" #headers UA 保证不会403

@@ -8,7 +8,7 @@ import time
 #公共变量
 universalCounter=0 #通用计数器
  #<相关信息>#
-live_cid="21507145" #直播间房间号
+live_cid="" #直播间房间号
 live_platform="web" #直播流格式
 #live_quality="4" #画质 2：流畅 3：高墙 4：原画
 live_qn="10000" #画质 80：流畅 150：高墙 400：蓝光 10000：原画
@@ -30,7 +30,7 @@ api_get_live_source_qn_params={
 '''
 #</api_url>#
  #<json>#
-json_path='C:\\Users\\\\AppData\\Roaming\\obs-studio\\basic\\scenes\\123.json' #json文件目录
+json_path='' #json文件目录
 json_data={} #json更新 用来存储数据
 #</json>#
 
@@ -64,8 +64,8 @@ while 1==1:
             write_json_data(the_revised_dict)
             print("json文件已修改 , "+str(time.time()))
             #如果备份文件存在，则删除
-            if os.path.exists("C:\\Users\\\\AppData\\Roaming\\obs-studio\\basic\\scenes\\123.json.bak"):
-                os.remove("C:\\Users\\\\AppData\\Roaming\\obs-studio\\basic\\scenes\\123.json.bak") 
+            if os.path.exists(""):
+                os.remove("") 
             os.system('start obs64-1.lnk')
             time.sleep(10)
             os.system('taskkill /f /im obs64.exe')
@@ -108,13 +108,3 @@ while 1==1:
             if live_state==1:
                 print("确认，重新开始大循环，并重新获取直播源 , "+str(time.time()))
                 break
-
-'''
- #<调用两个函数，更新json内容>#
-the_revised_dict = get_json_data(json_path)
-write_json_data(the_revised_dict)
- #</调用两个函数，更新json内容>#
-
-#打开obs
-os.system('obs64.exe.lnk')
-'''

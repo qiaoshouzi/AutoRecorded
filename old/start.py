@@ -22,7 +22,7 @@ api_room_status="https://api.live.bilibili.com/room/v1/Room/room_init?id="+live_
 api_get_live_source_qn="http://api.live.bilibili.com/room/v1/Room/playUrl?cid="+live_cid+"&qn="+live_qn+"&platform="+live_platform #解析直播源 画质qn
 #</api_url>#
  #<json>#
-json_path='C:\\Users\\\\AppData\\Roaming\\obs-studio\\basic\\scenes\\123.json' #json文件目录
+json_path='' #json文件目录
 json_data={} #json更新 用来存储数据
 #</json>#
 
@@ -83,13 +83,3 @@ while 1==1:
             if live_state==1:
                 print("确认，重新开始大循环，并重新获取直播源 , "+str(time.time()))
                 break
-
-'''
- #<调用两个函数，更新json内容>#
-the_revised_dict = get_json_data(json_path)
-write_json_data(the_revised_dict)
- #</调用两个函数，更新json内容>#
-
-#打开obs
-os.system('obs64.exe.lnk')
-'''
