@@ -1,0 +1,4 @@
+2021-02-25 22:25:46,261|AutoRecorded+ INFO    ++开始运行
+2021-02-25 22:25:46,455|AutoRecorded+ INFO    ++检测到开播
+2021-02-25 22:25:46,641|AutoRecorded+ INFO    ++获取到直播源: http://d1--cn-gotcha03.bilivideo.com/live-bvc/318886/live_21374533_1880543.flv?cdn=cn-gotcha03&expires=1614266745&len=0&oi=1901843310&pt=web&qn=10000&trid=61c62889db2a4b5ca832fe1b62d49824&sigparams=cdn,expires,len,oi,pt,qn,trid&sign=4d1e7de6f31ffd0f6a53e8e7521a88c8&ptype=0&src=5&sl=1&order=1
+2021-02-25 22:25:46,641|AutoRecorded+ INFO    ++ffmpeg已打开，录播开始
