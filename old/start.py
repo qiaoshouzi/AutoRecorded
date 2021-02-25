@@ -22,7 +22,7 @@ api_room_status="https://api.live.bilibili.com/room/v1/Room/room_init?id="+live_
 api_get_live_source_qn="http://api.live.bilibili.com/room/v1/Room/playUrl?cid="+live_cid+"&qn="+live_qn+"&platform="+live_platform #解析直播源 画质qn
 #</api_url>#
  #<json>#
-json_path='C:\\Users\\14782\\AppData\\Roaming\\obs-studio\\basic\\scenes\\123.json' #json文件目录
+json_path='C:\\Users\\\\AppData\\Roaming\\obs-studio\\basic\\scenes\\123.json' #json文件目录
 json_data={} #json更新 用来存储数据
 #</json>#
 

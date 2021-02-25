@@ -30,7 +30,7 @@ api_get_live_source_qn_params={
 '''
 #</api_url>#
  #<json>#
-json_path='C:\\Users\\14782\\AppData\\Roaming\\obs-studio\\basic\\scenes\\123.json' #json文件目录
+json_path='C:\\Users\\\\AppData\\Roaming\\obs-studio\\basic\\scenes\\123.json' #json文件目录
 json_data={} #json更新 用来存储数据
 #</json>#
 
@@ -64,8 +64,8 @@ while 1==1:
             write_json_data(the_revised_dict)
             print("json文件已修改 , "+str(time.time()))
             #如果备份文件存在，则删除
-            if os.path.exists("C:\\Users\\14782\\AppData\\Roaming\\obs-studio\\basic\\scenes\\123.json.bak"):
-                os.remove("C:\\Users\\14782\\AppData\\Roaming\\obs-studio\\basic\\scenes\\123.json.bak") 
+            if os.path.exists("C:\\Users\\\\AppData\\Roaming\\obs-studio\\basic\\scenes\\123.json.bak"):
+                os.remove("C:\\Users\\\\AppData\\Roaming\\obs-studio\\basic\\scenes\\123.json.bak") 
             os.system('start obs64-1.lnk')
             time.sleep(10)
             os.system('taskkill /f /im obs64.exe')
