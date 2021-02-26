@@ -8,6 +8,9 @@ import random
 import logging
 import logging.handlers
 
+#功能开关
+switch_ftqq=False #是否开启方糖推送 如果开启了一定要填写 ftqq_SendKey 否则可能会报错
+
 #变量
 universalCounter=0 #通用计数器
 
@@ -66,38 +69,41 @@ logger.addHandler(handler2)
 #def
  #方糖推送
 def ftqqTurbo(ftqq_SendKey, ftqq_title):
-    ftqq_returnValue=requests.post("https://sctapi.ftqq.com/"+ftqq_SendKey+".send?title="+ftqq_title).json()
-    ftqq_code=ftqq_returnValue["code"]
-    ftqq_pushid=ftqq_returnValue["data"]["pushid"]
-    ftqq_readkey=ftqq_returnValue["data"]["readkey"]
-    if ftqq_code == 0:
-        logger.info(" [方糖推送] 推送成功")
-        logger.info("pushid="+ftqq_pushid+"  readkey="+ftqq_readkey)
-        while 1==1:
-            ftqq_check_returnValue=requests.post("https://sctapi.ftqq.com/push?id="+ftqq_pushid+"&readkey="+ftqq_readkey).json()
-            ftqq_check_code=ftqq_check_returnValue["code"]
-            ftqq_check_message=ftqq_check_returnValue["message"]
-            ftqq_check_data=ftqq_check_returnValue["data"]
-            if ftqq_check_code == 10001:
-                logger.error(" [方糖推送复查] 报错10001 错误信息: "+ftqq_check_message)
-                break
-            else:
-                if ftqq_check_data == None:
-                    logger.error(" [方糖推送复查] data空白，可能pushid/readkey出现问题")
+    if switch_ftqq==True:
+        ftqq_returnValue=requests.post("https://sctapi.ftqq.com/"+ftqq_SendKey+".send?title="+ftqq_title).json()
+        ftqq_code=ftqq_returnValue["code"]
+        ftqq_pushid=ftqq_returnValue["data"]["pushid"]
+        ftqq_readkey=ftqq_returnValue["data"]["readkey"]
+        if ftqq_code == 0:
+            logger.info(" [方糖推送] 推送成功")
+            logger.info("pushid="+ftqq_pushid+"  readkey="+ftqq_readkey)
+            while 1==1:
+                ftqq_check_returnValue=requests.post("https://sctapi.ftqq.com/push?id="+ftqq_pushid+"&readkey="+ftqq_readkey).json()
+                ftqq_check_code=ftqq_check_returnValue["code"]
+                ftqq_check_message=ftqq_check_returnValue["message"]
+                ftqq_check_data=ftqq_check_returnValue["data"]
+                if ftqq_check_code == 10001:
+                    logger.error(" [方糖推送复查] 报错10001 错误信息: "+ftqq_check_message)
                     break
                 else:
-                    if ftqq_check_code["id"] == ftqq_pushid:
-                        logger.info(" [方糖推送复查] 推送成功")
+                    if ftqq_check_data == None:
+                        logger.error(" [方糖推送复查] data空白，可能pushid/readkey出现问题")
                         break
                     else:
-                        logger.error(" [方糖推送复查] 未知错误，返回值: "+ftqq_check_returnValue)
-                        break
-    if ftqq_code == 40001:
-        ftqq_info=ftqq_returnValue["info"]
-        logger.error(ftqq_info)
-    if ftqq_code == 20001:
-        ftqq_info=ftqq_returnValue["info"]
-        logger.error(ftqq_info)
+                        if ftqq_check_code["id"] == ftqq_pushid:
+                            logger.info(" [方糖推送复查] 推送成功")
+                            break
+                        else:
+                            logger.error(" [方糖推送复查] 未知错误，返回值: "+ftqq_check_returnValue)
+                            break
+        if ftqq_code == 40001:
+            ftqq_info=ftqq_returnValue["info"]
+            logger.error(ftqq_info)
+        if ftqq_code == 20001:
+            ftqq_info=ftqq_returnValue["info"]
+            logger.error(ftqq_info)
+    else:
+        logger.info(" [方糖推送] 未开启方糖推送功能，推送失败")
 
 #主代码
 universalCounter = 0 #计数器归0
