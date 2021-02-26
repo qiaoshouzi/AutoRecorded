@@ -46,9 +46,10 @@ ftqq_title="" #发送信息的title
 ftqq_pushid="" #用来检查
 ftqq_readkey="" #用来检查
 ftqq_check_returnValue="" #检查_返回值
-ftqq_check_code="" #检查_code
+ftqq_check_code=0 #检查_code
 ftqq_check_data="" #检查_data信息
-ftqq_check_message="" #检查_错误信息
+ftqq_check_message="" #检查_错误信息3
+ftqq_check_readkey="" #检查_检查
 
 #初始化
  #日志初始化
@@ -77,6 +78,7 @@ def ftqqTurbo(ftqq_SendKey, ftqq_title):
         if ftqq_code == 0:
             logger.info(" [方糖推送] 推送成功")
             logger.info("pushid="+ftqq_pushid+"  readkey="+ftqq_readkey)
+            '''#复查出了未知BUG。。。
             while 1==1:
                 ftqq_check_returnValue=requests.post("https://sctapi.ftqq.com/push?id="+ftqq_pushid+"&readkey="+ftqq_readkey).json()
                 ftqq_check_code=ftqq_check_returnValue["code"]
@@ -90,12 +92,13 @@ def ftqqTurbo(ftqq_SendKey, ftqq_title):
                         logger.error(" [方糖推送复查] data空白，可能pushid/readkey出现问题")
                         break
                     else:
-                        if ftqq_check_code["id"] == ftqq_pushid:
+                        if ftqq_check_readkey["readkey"] == ftqq_readkey:
                             logger.info(" [方糖推送复查] 推送成功")
                             break
                         else:
                             logger.error(" [方糖推送复查] 未知错误，返回值: "+ftqq_check_returnValue)
                             break
+            '''
         if ftqq_code == 40001:
             ftqq_info=ftqq_returnValue["info"]
             logger.error(ftqq_info)
