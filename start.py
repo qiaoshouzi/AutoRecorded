@@ -8,58 +8,68 @@ import random
 import logging
 import logging.handlers
 
-#åŠŸèƒ½å¼€å…³
-switch_ftqq=False #æ˜¯å¦å¼€å¯æ–¹ç³–æ¨é€ å¦‚æœå¼€å¯äº†ä¸€å®šè¦å¡«å†™ ftqq_SendKey å¦åˆ™å¯èƒ½ä¼šæŠ¥é”™
+#¹¦ÄÜ¿ª¹Ø
+switch_ftqq=False #ÊÇ·ñ¿ªÆô·½ÌÇÍÆËÍ Èç¹û¿ªÆôÁËÒ»¶¨ÒªÌîĞ´ ftqq_SendKey ·ñÔò¿ÉÄÜ»á±¨´í
+switch_qqGroup=False #ÊÇ·ñ¿ªÆôQQÈºÍÆËÍ Èç¹û¿ªÆôÁËÒ»¶¨ÒªÌîĞ´ qqGroup_id qqGroup_API ·ñÔò¿ÉÄÜ»á±¨´í
 
-#å˜é‡
-universalCounter=0 #é€šç”¨è®¡æ•°å™¨
+#±äÁ¿
+universalCounter=0 #Í¨ÓÃ¼ÆÊıÆ÷
 
-live_cid="" #ç›´æ’­é—´æˆ¿é—´å· #å¿…å¡«
-live_platform="web" #ç›´æ’­æµæ ¼å¼ #é€‰å¡«
-live_quality="4" #ç”»è´¨ 2ï¼šæµç•… 3ï¼šé«˜å¢™ 4ï¼šåŸç”» #é€‰å¡«
-live_qn="10000" #ç”»è´¨ 80ï¼šæµç•… 150ï¼šé«˜å¢™ 400ï¼šè“å…‰ 10000ï¼šåŸç”» #é€‰å¡«
-live_url="" #ç›´æ’­æºurl
-live_state="" #ç›´æ’­é—´çŠ¶æ€ç  0 1
+live_cid="" #Ö±²¥¼ä·¿¼äºÅ #±ØÌî
+live_platform="web" #Ö±²¥Á÷¸ñÊ½ #Ñ¡Ìî
+live_quality="4" #»­ÖÊ 2£ºÁ÷³© 3£º¸ßÇ½ 4£ºÔ­»­ #Ñ¡Ìî
+live_qn="10000" #»­ÖÊ 80£ºÁ÷³© 150£º¸ßÇ½ 400£ºÀ¶¹â 10000£ºÔ­»­ #Ñ¡Ìî
+live_url="" #Ö±²¥Ô´url
+live_state="" #Ö±²¥¼ä×´Ì¬Âë 0 1
 
-api_get_live_feeds="http://api.live.bilibili.com/room/v1/Room/playUrl" #è·å– ç›´æ’­æºURL çš„API
+api_get_live_feeds="http://api.live.bilibili.com/room/v1/Room/playUrl" #»ñÈ¡ Ö±²¥Ô´URL µÄAPI
 api_get_live_feeds_json={
     'cid': live_cid,
     'qn': live_qn,
     #'quality': live_quality,
     'platform': live_platform
 }
-api_post_live_inf="https://api.live.bilibili.com/room/v1/Room/room_init" #è·å– ç›´æ’­é—´ä¿¡æ¯ çš„API
+api_post_live_inf="https://api.live.bilibili.com/room/v1/Room/room_init" #»ñÈ¡ Ö±²¥¼äĞÅÏ¢ µÄAPI
 api_post_live_inf_json={
     'id': live_cid
 }
 
-recordingFolder="" #å½•æ’­æ–‡ä»¶å­˜å‚¨ç›®å½• #å¿…å¡«
+recordingFolder="" #Â¼²¥ÎÄ¼ş´æ´¢Ä¿Â¼ #±ØÌî
 
-ffmpeg_location="" #ffmpeg.exe æ–‡ä»¶ä½ç½®  #å¿…å¡«
-ffmpeg_UA="User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36" #headers UA ä¿è¯ä¸ä¼š403 #é€‰å¡«
+ffmpeg_location="" #ffmpeg.exe ÎÄ¼şÎ»ÖÃ  #±ØÌî
+ffmpeg_UA="User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36" #headers UA ±£Ö¤²»»á403 #Ñ¡Ìî
 
-ftqq_SendKey="" #æ–¹ç³–çš„SendKey #å¿…å¡«
-ftqq_returnValue="" #è¿”å›å€¼
-ftqq_code="" #çŠ¶æ€ä¿¡æ¯
-ftqq_info="" #é”™è¯¯ä¿¡æ¯
-ftqq_title="" #å‘é€ä¿¡æ¯çš„title
-ftqq_pushid="" #ç”¨æ¥æ£€æŸ¥
-ftqq_readkey="" #ç”¨æ¥æ£€æŸ¥
-ftqq_check_returnValue="" #æ£€æŸ¥_è¿”å›å€¼
-ftqq_check_code="" #æ£€æŸ¥_code
-ftqq_check_data="" #æ£€æŸ¥_dataä¿¡æ¯
-ftqq_check_message="" #æ£€æŸ¥_é”™è¯¯ä¿¡æ¯
+ftqq_SendKey="" #·½ÌÇµÄSendKey #±ØÌî
+ftqq_returnValue="" #·µ»ØÖµ
+ftqq_code="" #×´Ì¬ĞÅÏ¢
+ftqq_info="" #´íÎóĞÅÏ¢
+ftqq_title="" #·¢ËÍĞÅÏ¢µÄtitle
+ftqq_pushid="" #ÓÃÀ´¼ì²é
+ftqq_readkey="" #ÓÃÀ´¼ì²é
+ftqq_check_returnValue="" #¼ì²é_·µ»ØÖµ
+ftqq_check_code=0 #¼ì²é_code
+ftqq_check_data="" #¼ì²é_dataĞÅÏ¢
+ftqq_check_message="" #¼ì²é_´íÎóĞÅÏ¢3
+ftqq_check_readkey="" #¼ì²é_¼ì²é
 
-#åˆå§‹åŒ–
- #æ—¥å¿—åˆå§‹åŒ–
-  #åˆå§‹åŒ–
-logging.basicConfig(level = logging.INFO,format = '%(lineno)d | %(asctime)s - %(name)s - %(levelname)s - %(message)s') #è®¾ç½®æ§åˆ¶å°æ˜¾ç¤ºlogçš„æ ·å¼
-  #åˆ›å»º
+qqGroup_id="" #ÒªÍÆËÍµÄQQÈººÅ #±ØÌî
+qqGroup_message="" #Òª·¢ËÍµÄÏûÏ¢
+qqGroup_API="" #APIµØÖ· #±ØÌî
+qqGroup_API_json={
+    'group_id': qqGroup_id,
+    'message': qqGroup_message
+}
+
+#³õÊ¼»¯
+ #ÈÕÖ¾³õÊ¼»¯
+  #³õÊ¼»¯
+logging.basicConfig(level = logging.INFO,format = '%(lineno)d | %(asctime)s - %(name)s - %(levelname)s - %(message)s') #ÉèÖÃ¿ØÖÆÌ¨ÏÔÊ¾logµÄÑùÊ½
+  #´´½¨
 logger = logging.getLogger("AutoRecorded")
-  #åˆ›å»ºhandler
-handler1 = logging.FileHandler("logs\\log-"+str(int(time.time()))+".log") #è®¾ç½®logæ–‡ä»¶åæ ¼å¼
+  #´´½¨handler
+handler1 = logging.FileHandler("logs\\log-"+str(int(time.time()))+".log") #ÉèÖÃlogÎÄ¼şÃû¸ñÊ½
 handler1.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s|%(name)-12s+ %(levelname)-8s++%(message)s') #è®¾ç½® logæ–‡ä»¶ æ˜¾ç¤ºlogçš„æ ·å¼
+formatter = logging.Formatter('%(asctime)s|%(name)-12s+ %(levelname)-8s++%(message)s') #ÉèÖÃ logÎÄ¼ş ÏÔÊ¾logµÄÑùÊ½
 handler1.setFormatter(formatter)
 handler2 = logging.StreamHandler()
 handler2.setLevel(logging.ERROR)
@@ -67,7 +77,7 @@ logger.addHandler(handler1)
 logger.addHandler(handler2)
 
 #def
- #æ–¹ç³–æ¨é€
+ #·½ÌÇÍÆËÍ
 def ftqqTurbo(ftqq_SendKey, ftqq_title):
     if switch_ftqq==True:
         ftqq_returnValue=requests.post("https://sctapi.ftqq.com/"+ftqq_SendKey+".send?title="+ftqq_title).json()
@@ -75,27 +85,29 @@ def ftqqTurbo(ftqq_SendKey, ftqq_title):
         ftqq_pushid=ftqq_returnValue["data"]["pushid"]
         ftqq_readkey=ftqq_returnValue["data"]["readkey"]
         if ftqq_code == 0:
-            logger.info(" [æ–¹ç³–æ¨é€] æ¨é€æˆåŠŸ")
+            logger.info(" [·½ÌÇÍÆËÍ] ÍÆËÍ³É¹¦")
             logger.info("pushid="+ftqq_pushid+"  readkey="+ftqq_readkey)
+            '''#¸´²é³öÁËÎ´ÖªBUG¡£¡£¡£
             while 1==1:
                 ftqq_check_returnValue=requests.post("https://sctapi.ftqq.com/push?id="+ftqq_pushid+"&readkey="+ftqq_readkey).json()
                 ftqq_check_code=ftqq_check_returnValue["code"]
                 ftqq_check_message=ftqq_check_returnValue["message"]
                 ftqq_check_data=ftqq_check_returnValue["data"]
                 if ftqq_check_code == 10001:
-                    logger.error(" [æ–¹ç³–æ¨é€å¤æŸ¥] æŠ¥é”™10001 é”™è¯¯ä¿¡æ¯: "+ftqq_check_message)
+                    logger.error(" [·½ÌÇÍÆËÍ¸´²é] ±¨´í10001 ´íÎóĞÅÏ¢: "+ftqq_check_message)
                     break
                 else:
                     if ftqq_check_data == None:
-                        logger.error(" [æ–¹ç³–æ¨é€å¤æŸ¥] dataç©ºç™½ï¼Œå¯èƒ½pushid/readkeyå‡ºç°é—®é¢˜")
+                        logger.error(" [·½ÌÇÍÆËÍ¸´²é] data¿Õ°×£¬¿ÉÄÜpushid/readkey³öÏÖÎÊÌâ")
                         break
                     else:
-                        if ftqq_check_code["id"] == ftqq_pushid:
-                            logger.info(" [æ–¹ç³–æ¨é€å¤æŸ¥] æ¨é€æˆåŠŸ")
+                        if ftqq_check_readkey["readkey"] == ftqq_readkey:
+                            logger.info(" [·½ÌÇÍÆËÍ¸´²é] ÍÆËÍ³É¹¦")
                             break
                         else:
-                            logger.error(" [æ–¹ç³–æ¨é€å¤æŸ¥] æœªçŸ¥é”™è¯¯ï¼Œè¿”å›å€¼: "+ftqq_check_returnValue)
+                            logger.error(" [·½ÌÇÍÆËÍ¸´²é] Î´Öª´íÎó£¬·µ»ØÖµ: "+ftqq_check_returnValue)
                             break
+            '''
         if ftqq_code == 40001:
             ftqq_info=ftqq_returnValue["info"]
             logger.error(ftqq_info)
@@ -103,37 +115,53 @@ def ftqqTurbo(ftqq_SendKey, ftqq_title):
             ftqq_info=ftqq_returnValue["info"]
             logger.error(ftqq_info)
     else:
-        logger.info(" [æ–¹ç³–æ¨é€] æœªå¼€å¯æ–¹ç³–æ¨é€åŠŸèƒ½ï¼Œæ¨é€å¤±è´¥")
+        logger.info(" [·½ÌÇÍÆËÍ] Î´¿ªÆô·½ÌÇÍÆËÍ¹¦ÄÜ£¬ÍÆËÍÊ§°Ü")
 
-#ä¸»ä»£ç 
-universalCounter = 0 #è®¡æ•°å™¨å½’0
-logger.info(" [BOT] å¼€å§‹è¿è¡Œ")
+ #QQÈºÍÆËÍ
+def qqGroupPush(qqGroup_id, qqGroup_message):
+    if switch_qqGroup == True:
+        qqGroup_API_json={
+        'group_id': qqGroup_id,
+        'message': qqGroup_message
+        }
+        qqGroup_code=requests.post(qqGroup_API, qqGroup_API_json)
+        if qqGroup_code["retcode"] == 100:
+            logger.error(" [QQÈºÍÆËÍ] QQÈºÍÆËÍ´íÎó")
+            ftqqTurbo(ftqq_SendKey, "[QQÈºÍÆËÍ] [Error] QQÈºÍÆËÍ´íÎó")
+    else:
+        logger.info(" [QQÈºÍÆËÍ] Î´¿ªÆôQQÈºÍÆËÍ¹¦ÄÜ£¬ÍÆËÍÊ§°Ü")
+
+#Ö÷´úÂë
+universalCounter = 0 #¼ÆÊıÆ÷¹é0
+logger.info(" [BOT] ¿ªÊ¼ÔËĞĞ")
 while 1 == 1:
-    #å¦‚æœè®¡æ•°å™¨ == 1ï¼Œä»£è¡¨ffmpegå·²å…³é—­ï¼Œè¾“å‡ºlogå¹¶ç­‰å¾…30sçš„å†·å´æœŸ
+    #Èç¹û¼ÆÊıÆ÷ == 1£¬´ú±íffmpegÒÑ¹Ø±Õ£¬Êä³ölog²¢µÈ´ı30sµÄÀäÈ´ÆÚ
     if universalCounter == 1:
-        logger.info(" [è­¦å‘Š] æ£€æµ‹åˆ°ffmpegæ„å¤–å…³é—­/å·²ä¸‹æ’­ï¼Œå¾ªç¯é‡æ–°å¼€å§‹")
-        ftqqTurbo(ftqq_SendKey, "[è­¦å‘Š] æ£€æµ‹åˆ°ffmpegæ„å¤–å…³é—­/å·²ä¸‹æ’­ï¼Œå¾ªç¯é‡æ–°å¼€å§‹")
+        logger.info(" [¾¯¸æ] ¼ì²âµ½ffmpegÒâÍâ¹Ø±Õ/ÒÑÏÂ²¥£¬Ñ­»·ÖØĞÂ¿ªÊ¼")
+        ftqqTurbo(ftqq_SendKey, "[¾¯¸æ] ¼ì²âµ½ffmpegÒâÍâ¹Ø±Õ/ÒÑÏÂ²¥£¬Ñ­»·ÖØĞÂ¿ªÊ¼")
+        qqGroupPush(qqGroup_id, "¼ì²âµ½ÏÂ²¥£¨ÓĞ¿ÉÄÜ²»×¼È·£©")
         universalCounter = 0
         time.sleep(30)
-    #æ£€æµ‹æ˜¯å¦å¼€æ’­ï¼Œå¦‚æœå¼€æ’­æŠ“å–ç›´æ’­æºå¹¶ä½¿ç”¨ffmpegè¿›è¡Œå½•æ’­
+    #¼ì²âÊÇ·ñ¿ª²¥£¬Èç¹û¿ª²¥×¥È¡Ö±²¥Ô´²¢Ê¹ÓÃffmpeg½øĞĞÂ¼²¥
     while 1 == 1:
-        live_state=requests.post(api_post_live_inf, api_post_live_inf_json).json() #è·å–ç›´æ’­è¯¦ç»† json
+        live_state=requests.post(api_post_live_inf, api_post_live_inf_json).json() #»ñÈ¡Ö±²¥ÏêÏ¸ json
         i=live_state['code']
-        if i == -412: #æ£€æµ‹æ˜¯å¦è¢«IPä¸´æ—¶BANï¼Œå†·å´5min
-            logger.error(" [é”™è¯¯] IPè¢«æ‹¦æˆªï¼Œå·²è‡ªåŠ¨ç­‰å¾…5min")
-            ftqqTurbo(ftqq_SendKey, "[é”™è¯¯] IPè¢«æ‹¦æˆªï¼Œå·²è‡ªåŠ¨ç­‰å¾…5min")
+        if i == -412: #¼ì²âÊÇ·ñ±»IPÁÙÊ±BAN£¬ÀäÈ´5min
+            logger.error(" [´íÎó] IP±»À¹½Ø£¬ÒÑ×Ô¶¯µÈ´ı5min")
+            ftqqTurbo(ftqq_SendKey, "[´íÎó] IP±»À¹½Ø£¬ÒÑ×Ô¶¯µÈ´ı5min")
             time.sleep(300)
-        live_state=live_state["data"]["live_status"] #è·å–ç›´æ’­é—´çŠ¶æ€ç  0 æœªå¼€æ’­ 1 å¼€æ’­
+        live_state=live_state["data"]["live_status"] #»ñÈ¡Ö±²¥¼ä×´Ì¬Âë 0 Î´¿ª²¥ 1 ¿ª²¥
         if live_state == 1:
-            logger.info(" [BOT] æ£€æµ‹åˆ°å¼€æ’­")
-            ftqqTurbo(ftqq_SendKey, "[BOT] æ£€æµ‹åˆ°å¼€æ’­")
-            live_url = requests.get(api_get_live_feeds, api_get_live_feeds_json).json() #è·å–ç›´æ’­æºURL json
-            live_url = live_url["data"]["durl"][0]["url"] #è·å–ç›´æ’­æºURL
-            logger.info(" [BOT] è·å–åˆ°ç›´æ’­æº: "+live_url)
-            logger.info(" [BOT] ffmpegå·²æ‰“å¼€ï¼Œå½•æ’­å¼€å§‹")
-            file_name = str(int(time.time())) #å°†å½“å‰æ—¶é—´æˆ³è®¾ç½®ä¸ºå½•æ’­æ–‡ä»¶å
+            logger.info(" [BOT] ¼ì²âµ½¿ª²¥")
+            ftqqTurbo(ftqq_SendKey, "[BOT] ¼ì²âµ½¿ª²¥")
+            qqGroupPush(qqGroup_id, "¼ì²âµ½¿ª²¥£¨ÓĞ¿ÉÄÜ²»×¼È·£©")
+            live_url = requests.get(api_get_live_feeds, api_get_live_feeds_json).json() #»ñÈ¡Ö±²¥Ô´URL json
+            live_url = live_url["data"]["durl"][0]["url"] #»ñÈ¡Ö±²¥Ô´URL
+            logger.info(" [BOT] »ñÈ¡µ½Ö±²¥Ô´: "+live_url)
+            logger.info(" [BOT] ffmpegÒÑ´ò¿ª£¬Â¼²¥¿ªÊ¼")
+            file_name = str(int(time.time())) #½«µ±Ç°Ê±¼ä´ÁÉèÖÃÎªÂ¼²¥ÎÄ¼şÃû
             recordingFolder = recordingFolder+file_name+".flv"
             os.system(ffmpeg_location+' -headers "'+ffmpeg_UA+'" -i "'+live_url+'" -c copy '+recordingFolder)
-            universalCounter = 1 #å°†è®¡æ•°å™¨è®¾ç½®ä¸º1ç¡®ä¿èƒ½è¯†åˆ«
+            universalCounter = 1 #½«¼ÆÊıÆ÷ÉèÖÃÎª1È·±£ÄÜÊ¶±ğ
             break
         time.sleep(30)

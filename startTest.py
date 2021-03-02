@@ -51,6 +51,7 @@ ftqq_check_data="" #检查_data信息
 ftqq_check_message="" #检查_错误信息3
 ftqq_check_readkey="" #检查_检查
 
+
 #初始化
  #日志初始化
   #初始化
