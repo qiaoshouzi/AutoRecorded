@@ -10,6 +10,7 @@ import logging.handlers
 
 #功能开关
 switch_ftqq=False #是否开启方糖推送 如果开启了一定要填写 ftqq_SendKey 否则可能会报错
+switch_qqGroup=False #是否开启QQ群推送 如果开启了一定要填写 qqGroup_id qqGroup_API 否则可能会报错
 
 #变量
 universalCounter=0 #通用计数器
@@ -51,6 +52,13 @@ ftqq_check_data="" #检查_data信息
 ftqq_check_message="" #检查_错误信息3
 ftqq_check_readkey="" #检查_检查
 
+qqGroup_id="" #要推送的QQ群号 #必填
+qqGroup_message="" #要发送的消息
+qqGroup_API="" #API地址 #必填
+qqGroup_API_json={
+    'group_id': qqGroup_id,
+    'message': qqGroup_message
+}
 
 #初始化
  #日志初始化
@@ -109,6 +117,20 @@ def ftqqTurbo(ftqq_SendKey, ftqq_title):
     else:
         logger.info(" [方糖推送] 未开启方糖推送功能，推送失败")
 
+ #QQ群推送
+def qqGroupPush(qqGroup_id, qqGroup_message):
+    if switch_qqGroup == True:
+        qqGroup_API_json={
+        'group_id': qqGroup_id,
+        'message': qqGroup_message
+        }
+        qqGroup_code=requests.post(qqGroup_API, qqGroup_API_json)
+        if qqGroup_code["retcode"] == 100:
+            logger.error(" [QQ群推送] QQ群推送错误")
+            ftqqTurbo(ftqq_SendKey, "[QQ群推送] [Error] QQ群推送错误")
+    else:
+        logger.info(" [QQ群推送] 未开启QQ群推送功能，推送失败")
+
 #主代码
 universalCounter = 0 #计数器归0
 logger.info(" [BOT] 开始运行")
@@ -117,6 +139,7 @@ while 1 == 1:
     if universalCounter == 1:
         logger.info(" [警告] 检测到ffmpeg意外关闭/已下播，循环重新开始")
         ftqqTurbo(ftqq_SendKey, "[警告] 检测到ffmpeg意外关闭/已下播，循环重新开始")
+        qqGroupPush(qqGroup_id, "检测到下播（有可能不准确）")
         universalCounter = 0
         time.sleep(30)
     #检测是否开播，如果开播抓取直播源并使用ffmpeg进行录播
@@ -131,6 +154,7 @@ while 1 == 1:
         if live_state == 1:
             logger.info(" [BOT] 检测到开播")
             ftqqTurbo(ftqq_SendKey, "[BOT] 检测到开播")
+            qqGroupPush(qqGroup_id, "检测到开播（有可能不准确）")
             live_url = requests.get(api_get_live_feeds, api_get_live_feeds_json).json() #获取直播源URL json
             live_url = live_url["data"]["durl"][0]["url"] #获取直播源URL
             logger.info(" [BOT] 获取到直播源: "+live_url)
