@@ -124,7 +124,7 @@ def qqGroupPush(qqGroup_id, qqGroup_message):
         'group_id': qqGroup_id,
         'message': qqGroup_message
         }
-        qqGroup_code=requests.post(qqGroup_API, qqGroup_API_json)
+        qqGroup_code=requests.post(qqGroup_API, qqGroup_API_json).json()
         if qqGroup_code["retcode"] == 100:
             logger.error(" [QQ群推送] QQ群推送错误")
             ftqqTurbo(ftqq_SendKey, "[QQ群推送] [Error] QQ群推送错误")
@@ -161,6 +161,7 @@ while 1 == 1:
             logger.info(" [BOT] ffmpeg已打开，录播开始")
             file_name = str(int(time.time())) #将当前时间戳设置为录播文件名
             recordingFolder = recordingFolder+file_name+".flv"
+            time.sleep(60)
             os.system(ffmpeg_location+' -headers "'+ffmpeg_UA+'" -i "'+live_url+'" -c copy '+recordingFolder)
             universalCounter = 1 #将计数器设置为1确保能识别
             break
